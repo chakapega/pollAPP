@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans');
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 19px;
+  background-color: #5f9ea080;
+}
+.inputs__container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  width: 290px;
+}
+.margin-bottom {
+  margin-bottom: 7px;
+}
+.person__having_children_container {
+  display: flex;
+  align-content: center;
+}
+#person__having_children {
+  margin-left: 10px;
+}
+.container__person_quantity_children {
+  display: flex;
+  flex-direction: column;
+}
+.person__children_info_container {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 2px dotted black;
+}
+.display__children_info {
+  display: none;
+}
+.main__container {
+  display: flex;
+  width: 80%;
+  justify-content: space-around;
+}
+.results__container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+}
+.button__show_results {
+  margin-bottom: 25px;
+}
+#input__person_having_children {
+  margin-left: 15px;
+  margin-top: 5px;
+}
+.person-info {
+  background-color: cadetblue;
+  padding: 10px;
+  margin: 5px;
+}
+
+
