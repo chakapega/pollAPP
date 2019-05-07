@@ -37,7 +37,7 @@ const showQuantityChildrenInput = () => {
 
   if (personHavingChildren.checked) {
     inputsContainer.insertBefore(createQuantityChildrenInput(), buttonShowResults);
-    buttonNext = document.querySelector('.button__next')
+    buttonNext = document.querySelector('.button__next');
     buttonNextFunc();
   } else {
     document.querySelector('.container__person_quantity_children').remove();
@@ -80,7 +80,7 @@ const createInputsForChildren = quantityChildren => {
       paragraph.textContent = 'Enter the name and age of your first child.';
     } else {
       paragraph.textContent = 'Enter the name and age of your next child.';
-    }
+    };
     
     labelName.classList.add('margin-bottom');
     labelName.htmlFor = 'input__person_child' + j + '_name';
@@ -110,6 +110,8 @@ const createInputsForChildren = quantityChildren => {
 };
 
 const showResults = () => {
+
+  console.log(document.querySelectorAll('.marker'));
   
   if(findEmptyInputs() === 0) {
     const resultsContainer = document.createElement('div');
@@ -165,7 +167,7 @@ const findEmptyInputs = () => {
 
 const buttonNextFunc = () => {
 
-  buttonNext.addEventListener('click', function() {
+  buttonNext.addEventListener('click', () => {
     getPersonQuantityChildren();
     createInputsForChildren(quantityChildren);
   });
