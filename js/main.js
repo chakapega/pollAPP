@@ -109,45 +109,79 @@ const createInputsForChildren = quantityChildren => {
 
 };
 
-const showResults = () => {
+const showResults = element => {
+  inputsContainer.style.display = 'none';
+  mainContainer.appendChild(element);
+};
 
-  console.log(document.querySelectorAll('.marker'));
-  
-  if(findEmptyInputs() === 0) {
-    const resultsContainer = document.createElement('div');
-    resultsContainer.classList.add('results__container');
-    
-    resultsContainer.innerHTML = '<p>Summary Information</p>';
-    resultsContainer.innerHTML += '<p>Person:</p>';
-    resultsContainer.innerHTML += '<p class="person-info">Name: ' + document.querySelector('#input__person_name').value + '</p>';
-    resultsContainer.innerHTML += '<p class="person-info">Last name: ' + document.querySelector('#input__person_last_name').value + '</p>';
-    resultsContainer.innerHTML += '<p class="person-info">Age: ' + document.querySelector('#input__person_age').value + '</p>';
-    resultsContainer.innerHTML += '<p class="person-info">Height: ' + document.querySelector('#input__person_height').value + ' centimeters</p>';
-    resultsContainer.innerHTML += '<p class="person-info">Weight: ' + document.querySelector('#input__person_weight').value + ' kilogram</p>';
-    resultsContainer.innerHTML += '<p class="person-info">Gender: ' + document.querySelector('#select__person_gender').value + '</p>';
-    resultsContainer.innerHTML += '<p class="person-info">Marital status: ' + document.querySelector('#select__person_marital_status').value + '</p>';
-    
-    if(personHavingChildren.checked) {
-      resultsContainer.innerHTML += '<p class="person-info">Having children: Yes</p>';
-      resultsContainer.innerHTML += '<p class="person-info">Quantity children: ' + document.querySelector('#input__person_quantity_children').value + '</p>';
-      resultsContainer.innerHTML += '<p>Children:</p>';
+const createResultsContainer = () => {
+  const resultsContainer = document.createElement('div');
+  resultsContainer.classList.add('results__container');
 
-      for(let i = 0, j = 1; i < quantityChildren; i++, j++) {
-        resultsContainer.innerHTML += '<p class="person-info">Name: ' + document.querySelector('#input__person_child' + j + '_name').value +
-        ' | ' + 'Age: ' + document.querySelector('#input__person_child' + j + '_age').value + '</p>';
-      };
+  const paragraphPerson = document.createElement('p');
+  paragraphPerson.textContent = 'Person:';
 
-    } else {
-      resultsContainer.innerHTML += '<p class="person-info">Having children: No</p>';
-    };
+  const paragraphPersonName = document.createElement('p');
+  paragraphPersonName.classList.add('person-info');
+  paragraphPersonName.textContent = 'Name: ' + document.querySelector('#input__person_name').value;
 
-    inputsContainer.style.display = 'none';
-    mainContainer.appendChild(resultsContainer);
+  const paragraphPersonLastName = document.createElement('p');
+  paragraphPersonLastName.classList.add('person-info');
+  paragraphPersonLastName.textContent = 'Last name: ' + document.querySelector('#input__person_last_name').value;
 
+  const paragraphPersonAge = document.createElement('p');
+  paragraphPersonAge.classList.add('person-info');
+  paragraphPersonAge.textContent = 'Age: ' + document.querySelector('#input__person_age').value;
+
+  const paragraphPersonHeight = document.createElement('p');
+  paragraphPersonHeight.classList.add('person-info');
+  paragraphPersonHeight.textContent = 'Height: ' + document.querySelector('#input__person_height').value;
+
+  const paragraphPersonWeight = document.createElement('p');
+  paragraphPersonWeight.classList.add('person-info');
+  paragraphPersonWeight.textContent = 'Weight: ' + document.querySelector('#input__person_weight').value;
+
+  const paragraphPersonGender = document.createElement('p');
+  paragraphPersonGender.classList.add('person-info');
+  paragraphPersonGender.textContent = 'Gender: ' + document.querySelector('#select__person_gender').value;
+
+  const paragraphPersonMaritalStatus = document.createElement('p');
+  paragraphPersonMaritalStatus.classList.add('person-info');
+  paragraphPersonMaritalStatus.textContent = 'Marital status: ' + document.querySelector('#select__person_marital_status').value;
+
+  const paragraphPersonHavingChildren = document.createElement('p');
+  paragraphPersonHavingChildren.classList.add('person-info');
+  if(document.querySelector('#input__person_having_children').checked) {
+    paragraphPersonHavingChildren.textContent = 'Having children: Yes';
   } else {
-    alert('Input error!');
+    paragraphPersonHavingChildren.textContent = 'Having children: No';
   };
   
+  resultsContainer.appendChild(paragraphPerson);
+  resultsContainer.appendChild(paragraphPersonName);
+  resultsContainer.appendChild(paragraphPersonLastName);
+  resultsContainer.appendChild(paragraphPersonAge);
+  resultsContainer.appendChild(paragraphPersonHeight);
+  resultsContainer.appendChild(paragraphPersonWeight);
+  resultsContainer.appendChild(paragraphPersonGender);
+  resultsContainer.appendChild(paragraphPersonMaritalStatus);
+  resultsContainer.appendChild(paragraphPersonHavingChildren);
+
+  if(document.querySelector('#input__person_having_children').checked) {
+    const paragraphChildren = document.createElement('p');
+    paragraphChildren.textContent = 'Children:';
+    resultsContainer.appendChild(paragraphChildren);
+
+    for(let i = 0, j = 1; i < quantityChildren; i++, j++) {
+      const paragraphChild = document.createElement('p');
+      paragraphChild.classList.add('person-info');
+      paragraphChild.textContent = 'Name: ' + document.querySelector('#input__person_child' + j + '_name').value;
+      paragraphChild.textContent += ' | Age: ' + document.querySelector('#input__person_child' + j + '_age').value;
+      resultsContainer.appendChild(paragraphChild);
+    };
+  };
+
+  return resultsContainer;
 };
 
 const findEmptyInputs = () => {
@@ -176,7 +210,9 @@ const buttonNextFunc = () => {
 
 personHavingChildren.addEventListener('click', showQuantityChildrenInput);
 
-buttonShowResults.addEventListener('click', showResults);
+buttonShowResults.addEventListener('click', () => {
+  showResults(createResultsContainer());
+});
 
 
 
