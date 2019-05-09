@@ -1,16 +1,19 @@
 let quantityChildren;
 const inputsContainer = document.querySelector('.inputs__container');
 const personHavingChildren = document.querySelector('#input__person_having_children');
-let buttonNext;
 const buttonShowResults = document.querySelector('.button__show_results');
 const mainContainer = document.querySelector('.main__container');
 
 const createQuantityChildrenInput = () => {
-
   const personQuantityChildrenContainer = document.createElement('div');
   const laberForQuantityChildrenInput = document.createElement('label');
   const inputQuantityChildren = document.createElement('input');
-  buttonNext = document.createElement('button');
+
+  const buttonNext = document.createElement('button');
+  buttonNext.addEventListener('click', () => {
+    getPersonQuantityChildren();
+    createInputsForChildren(quantityChildren);
+  });
 
   personQuantityChildrenContainer.classList.add('container__person_quantity_children', 'margin-bottom');
 
@@ -30,41 +33,31 @@ const createQuantityChildrenInput = () => {
   personQuantityChildrenContainer.appendChild(buttonNext);
 
   return personQuantityChildrenContainer;
-
 };
 
 const showQuantityChildrenInput = () => {
-
   if (personHavingChildren.checked) {
     inputsContainer.insertBefore(createQuantityChildrenInput(), buttonShowResults);
-    buttonNext = document.querySelector('.button__next');
-    buttonNextFunc();
   } else {
     document.querySelector('.container__person_quantity_children').remove();
-    correctionQuantityInputsForChildren();
+    deletionQuantityInputsForChildren();
   };
-
 };
 
-const correctionQuantityInputsForChildren = () => {
-  
+const deletionQuantityInputsForChildren = () => {
   let countRemove = document.querySelectorAll('.person__children_info_container').length;
   
   for(let i = 0; i < countRemove; i++) {
     document.querySelector('.person__children_info_container').remove();
   };
-
 };
 
 const getPersonQuantityChildren = () => {
-
   quantityChildren = document.querySelector('#input__person_quantity_children').value;
-  
 };
 
 const createInputsForChildren = quantityChildren => {
-
-  correctionQuantityInputsForChildren();
+  deletionQuantityInputsForChildren();
   
   for(let i = 0,j = 1; i < quantityChildren; i++, j++) {
     const childrenInputsContainer = document.createElement('div');
@@ -106,7 +99,6 @@ const createInputsForChildren = quantityChildren => {
     
     inputsContainer.insertBefore(childrenInputsContainer, buttonShowResults);
   };
-
 };
 
 const showResults = element => {
@@ -185,7 +177,6 @@ const createResultsContainer = () => {
 };
 
 const findEmptyInputs = () => {
-
   const allInputs = document.querySelectorAll('input');
   let emptyInputs = 0;
 
@@ -196,21 +187,10 @@ const findEmptyInputs = () => {
   };
   
   return emptyInputs;
-  
-};
-
-const buttonNextFunc = () => {
-
-  buttonNext.addEventListener('click', () => {
-    getPersonQuantityChildren();
-    createInputsForChildren(quantityChildren);
-  });
-  
 };
 
 personHavingChildren.addEventListener('click', showQuantityChildrenInput);
-
-buttonShowResults.addEventListener('click', () => {
+  buttonShowResults.addEventListener('click', () => {
   showResults(createResultsContainer());
 });
 
