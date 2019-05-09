@@ -1,4 +1,3 @@
-let quantityChildren;
 const inputsContainer = document.querySelector('.inputs__container');
 const personHavingChildren = document.querySelector('#input__person_having_children');
 const buttonShowResults = document.querySelector('.button__show_results');
@@ -11,8 +10,7 @@ const createQuantityChildrenInput = () => {
 
   const buttonNext = document.createElement('button');
   buttonNext.addEventListener('click', () => {
-    getPersonQuantityChildren();
-    createInputsForChildren(quantityChildren);
+    showInputsForChildren(createInputsForChildren(getPersonQuantityChildren()));
   });
 
   personQuantityChildrenContainer.classList.add('container__person_quantity_children', 'margin-bottom');
@@ -37,37 +35,39 @@ const createQuantityChildrenInput = () => {
 
 const showQuantityChildrenInput = () => {
   if (personHavingChildren.checked) {
-    inputsContainer.insertBefore(createQuantityChildrenInput(), buttonShowResults);
+    const element = createQuantityChildrenInput();
+    inputsContainer.insertBefore(element, buttonShowResults);
   } else {
     document.querySelector('.container__person_quantity_children').remove();
-    deletionQuantityInputsForChildren();
+    deletionInputsForChildren();
   };
 };
 
-const deletionQuantityInputsForChildren = () => {
-  let countRemove = document.querySelectorAll('.person__children_info_container').length;
+const deletionInputsForChildren = () => {
+  let countRemove = document.querySelectorAll('.person__children_inputs_container').length;
   
   for(let i = 0; i < countRemove; i++) {
-    document.querySelector('.person__children_info_container').remove();
+    document.querySelector('.person__children_inputs_container').remove();
   };
 };
 
 const getPersonQuantityChildren = () => {
-  quantityChildren = document.querySelector('#input__person_quantity_children').value;
+  return document.querySelector('#input__person_quantity_children').value;
 };
 
 const createInputsForChildren = quantityChildren => {
-  deletionQuantityInputsForChildren();
-  
+  const childrenInputsContainer = document.createElement('div');
+  childrenInputsContainer.classList.add('margin-bottom', 'person__children_inputs_container');
+
   for(let i = 0,j = 1; i < quantityChildren; i++, j++) {
-    const childrenInputsContainer = document.createElement('div');
+    const childContainer = document.createElement('div');
     const paragraph = document.createElement('p');
     const labelName = document.createElement('label');
     const inputName = document.createElement('input');
     const labelAge = document.createElement('label');
     const inputAge = document.createElement('input');
     
-    childrenInputsContainer.classList.add('margin-bottom', 'person__children_info_container', 'child' + j);
+    childContainer.classList.add('child' + j, 'child__inputs_container');
     
     if(i === 0) {
       paragraph.textContent = 'Enter the name and age of your first child.';
@@ -91,14 +91,22 @@ const createInputsForChildren = quantityChildren => {
     inputAge.classList.add('margin-bottom');
     inputAge.id = 'input__person_child' + j + '_age';
     
-    childrenInputsContainer.appendChild(paragraph);
-    childrenInputsContainer.appendChild(labelName);
-    childrenInputsContainer.appendChild(inputName);
-    childrenInputsContainer.appendChild(labelAge);
-    childrenInputsContainer.appendChild(inputAge);
-    
-    inputsContainer.insertBefore(childrenInputsContainer, buttonShowResults);
+    childContainer.appendChild(paragraph);
+    childContainer.appendChild(labelName);
+    childContainer.appendChild(inputName);
+    childContainer.appendChild(labelAge);
+    childContainer.appendChild(inputAge);
+
+    childrenInputsContainer.appendChild(childContainer);
   };
+  
+  return childrenInputsContainer;
+};
+
+const showInputsForChildren = () => {
+  deletionInputsForChildren();
+  
+  inputsContainer.insertBefore(createInputsForChildren(getPersonQuantityChildren()), buttonShowResults);
 };
 
 const showResults = element => {
