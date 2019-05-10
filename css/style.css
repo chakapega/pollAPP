@@ -23,6 +23,7 @@ body {
 
 .input-bc {
   background-color: #ffffffad;
+  font-weight: bold;
 }
 
 .person__having_children_container {
@@ -68,6 +69,7 @@ body {
 .btn-bc {
   background-color: #ffffffad;
   height: 26px;
+  font-weight: bold;
 }
 
 #input__person_having_children {

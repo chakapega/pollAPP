@@ -6,10 +6,12 @@ const mainContainer = document.querySelector('.main__container');
 const createQuantityChildrenInput = () => {
   const personQuantityChildrenContainer = document.createElement('div');
   const laberForQuantityChildrenInput = document.createElement('label');
-  const inputQuantityChildren = document.createElement('input');
 
-  const buttonNext = document.createElement('button');
-  buttonNext.addEventListener('click', () => {
+  const inputQuantityChildren = document.createElement('input');
+  inputQuantityChildren.addEventListener('keyup', () => {
+    showInputsForChildren(createInputsForChildren(getPersonQuantityChildren()));
+  });
+  inputQuantityChildren.addEventListener('click', () => {
     showInputsForChildren(createInputsForChildren(getPersonQuantityChildren()));
   });
 
@@ -23,21 +25,16 @@ const createQuantityChildrenInput = () => {
   inputQuantityChildren.type = 'number';
   inputQuantityChildren.id = 'input__person_quantity_children';
 
-  buttonNext.classList.add('button__next', 'margin-bottom', 'btn-bc');
-  buttonNext.textContent = 'Next/Recount';
-
   personQuantityChildrenContainer.appendChild(laberForQuantityChildrenInput);
   personQuantityChildrenContainer.appendChild(inputQuantityChildren);
-  personQuantityChildrenContainer.appendChild(buttonNext);
 
   return personQuantityChildrenContainer;
 };
 
-const showQuantityChildrenInput = () => {
+const showQuantityChildrenInput = element => {
   if (personHavingChildren.checked) {
-    const element = createQuantityChildrenInput();
     inputsContainer.insertBefore(element, buttonShowResults);
-  } else {
+  } else if(document.querySelector('.container__person_quantity_children')) {
     document.querySelector('.container__person_quantity_children').remove();
     deletionInputsForChildren();
   };
@@ -190,21 +187,26 @@ const createResultsContainer = quantityChildren => {
 
 const findEmptyInputs = () => {
   const allInputs = document.querySelectorAll('input');
-  let emptyInputs = 0;
-
+  
   for(let i = 0; i < allInputs.length; i++) {
     if(allInputs[i].value === "") {
-      emptyInputs++;
+      return false;
     };
   };
   
-  return emptyInputs;
+  return true;
 };
 
-personHavingChildren.addEventListener('click', showQuantityChildrenInput);
+personHavingChildren.addEventListener('click', () => {
+  showQuantityChildrenInput(createQuantityChildrenInput());
+});
 
 buttonShowResults.addEventListener('click', () => {
-  showResults(createResultsContainer(getPersonQuantityChildren()));
+  if(findEmptyInputs()) {
+    showResults(createResultsContainer(getPersonQuantityChildren()));
+  } else {
+    alert('Please fill in all input');
+  };
 });
 
 
