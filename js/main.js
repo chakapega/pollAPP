@@ -19,11 +19,11 @@ const createQuantityChildrenInput = () => {
   laberForQuantityChildrenInput.htmlFor = 'input__person_quantity_children';
   laberForQuantityChildrenInput.textContent = 'How many kids do you have?';
 
-  inputQuantityChildren.classList.add('margin-bottom');
+  inputQuantityChildren.classList.add('margin-bottom', 'input-bc');
   inputQuantityChildren.type = 'number';
   inputQuantityChildren.id = 'input__person_quantity_children';
 
-  buttonNext.classList.add('button__next', 'margin-bottom');
+  buttonNext.classList.add('button__next', 'margin-bottom', 'btn-bc');
   buttonNext.textContent = 'Next/Recount';
 
   personQuantityChildrenContainer.appendChild(laberForQuantityChildrenInput);
@@ -52,7 +52,11 @@ const deletionInputsForChildren = () => {
 };
 
 const getPersonQuantityChildren = () => {
-  return document.querySelector('#input__person_quantity_children').value;
+  if(document.querySelector('#input__person_quantity_children')) {
+    return document.querySelector('#input__person_quantity_children').value;
+  } else {
+    return 0;
+  };
 };
 
 const createInputsForChildren = quantityChildren => {
@@ -79,7 +83,7 @@ const createInputsForChildren = quantityChildren => {
     labelName.htmlFor = 'input__person_child' + j + '_name';
     labelName.textContent = 'Child\'s name';
     
-    inputName.classList.add('margin-bottom');
+    inputName.classList.add('margin-bottom', 'input-bc');
     inputName.type = 'text';
     inputName.id = 'input__person_child' + j + '_name';
     
@@ -88,7 +92,7 @@ const createInputsForChildren = quantityChildren => {
     labelAge.textContent = 'Child\'s age';
     
     inputAge.type = 'number';
-    inputAge.classList.add('margin-bottom');
+    inputAge.classList.add('margin-bottom', 'input-bc');
     inputAge.id = 'input__person_child' + j + '_age';
     
     childContainer.appendChild(paragraph);
@@ -114,7 +118,7 @@ const showResults = element => {
   mainContainer.appendChild(element);
 };
 
-const createResultsContainer = () => {
+const createResultsContainer = quantityChildren => {
   const resultsContainer = document.createElement('div');
   resultsContainer.classList.add('results__container');
 
@@ -198,8 +202,9 @@ const findEmptyInputs = () => {
 };
 
 personHavingChildren.addEventListener('click', showQuantityChildrenInput);
-  buttonShowResults.addEventListener('click', () => {
-  showResults(createResultsContainer());
+
+buttonShowResults.addEventListener('click', () => {
+  showResults(createResultsContainer(getPersonQuantityChildren()));
 });
 
 

@@ -21,9 +21,13 @@ body {
   border-radius: 7px;
 }
 
+.input-bc {
+  background-color: #ffffffad;
+}
+
 .person__having_children_container {
   display: flex;
-  align-content: center;
+  align-items: center;
 }
 
 #person__having_children {
@@ -34,10 +38,6 @@ body {
   display: flex;
   flex-direction: column;
 }
-
-/* .person__children_inputs_container {
-
-} */
 
 .child__inputs_container {
   display: flex;
@@ -65,9 +65,15 @@ body {
   border-radius: 7px;
 }
 
+.btn-bc {
+  background-color: #ffffffad;
+  height: 26px;
+}
+
 #input__person_having_children {
-  margin-left: 15px;
-  margin-top: 5px;
+  height: 25px;
+  width: 25px;
+  margin-right: 55px;
 }
 
 .person-info {
